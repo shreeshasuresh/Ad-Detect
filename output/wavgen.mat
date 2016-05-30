@@ -1,0 +1,43 @@
+%######################################################################
+%#                                                                    #
+%#                       Title: wavgen.mat                            #     
+%#   Project: Automated Detection and Removal of Ads in Audio Clips   #
+%#     Contributors: Shreesha S, S Rajesh Kumar, Rakshith S Singh     #
+%#  Email: {shreesha.suresh,rajesh.kumar1995,r7.silverfox}@gmail.com  #
+%#                                                                    #
+%######################################################################
+
+%# This runs error-free on Octave (an open-source alternative to MATLAB)
+%# To run on MATLAB, the syntax to read and write wav files should be altered.
+
+window_time_duration = 250; 
+input_file_name = 'test6.2.wav';
+[x,Fs] = wavread(input_file_name);
+if size(x,2) == 2
+  x = x(:,1);
+end
+window_length =  window_time_duration / 1000 * Fs;
+num_frames = floor(length(x) / window_length)
+x = x(1:round(num_frames * window_length),:);
+dataset = [];
+ad = [];
+count = 1;
+predictions = csvread('svm_test6.2_class.dat');
+predictions = predictions';
+for i=0:num_frames-1
+  window_start = round(i*window_length + 1);
+  window_end = round((i+1) * window_length);
+  window = x(window_start:window_end,:);
+  if(count < num_frames)
+    if(predictions(count,1) == 1)
+      dataset = [ dataset; window];
+    else
+      ad = [ ad; window];
+    end
+  end
+  count = count+1;
+end
+count
+wavwrite(dataset,Fs,'svm_test6-2op.wav');
+wavwrite(ad,Fs,'svm_test6-2adop.wav');
+
