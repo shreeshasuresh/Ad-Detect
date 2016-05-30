@@ -5,6 +5,7 @@ songs and advertisements using the Support Vector Machines.
 * Trained the SVM classifier with 20000 samples to classify test samples into two
 classes – Ad or Song. 
 * Wrote a correction algorithm to improve accuracy.
+
 ___
 ## Dependencies:
 * Ubuntu === 14.04 (This script may work on any Linux distro)
@@ -15,6 +16,7 @@ ___
 * scikit-learn === 0.17.1
 * pyAudioAnalysis === [Go to the repository] (https://github.com/tyiannak/pyAudioAnalysis/wiki)
 * Octave === 3.8.1
+
 ___
 ## Steps to run this script:
 1. Install all the dependencies if not installed already.
